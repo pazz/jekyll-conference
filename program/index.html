@@ -51,8 +51,8 @@ title: Program
 
   <h1>{{ page.title }}</h1>
 
-  <div class="table-responsive-md">
-    <table class="table table-bordered">
+  <div style="max-width: 100vw; overflow-x: scroll; position: sticky; top: 0px;">
+    <table class="table">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -131,7 +131,7 @@ title: Program
 
                   {% assign talk_nbr_steps = talk_duration_min | divided_by: site.time_steps %}
                   {% include get_main_category.html %}
-                  <td rowspan="{{ talk_nbr_steps }}" class="alert alert-{{ main_cat_color }}">
+                  <td rowspan="{{ talk_nbr_steps }}" class="box box-{{ main_cat_color }}">
 
                     <strong>{% include show_talk.html %}</strong>
                     <br />

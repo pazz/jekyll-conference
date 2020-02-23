@@ -8,7 +8,7 @@
   margin-bottom: 0;
 }
 
-// line bbreaks only active on small screens
+// line breaks only active on small screens
 @include media-breakpoint-up(lg) {
   .br-md {
     display: none;
@@ -22,36 +22,66 @@
 
 
 // Program Styling
-
-$prgm-first-col-width: 4rem !default;
-$prgm-cols-width: 150px !default;
-$prgm-breakpoint-down: sm !default;
-
-// minimum table container width
-@include media-breakpoint-down($prgm-breakpoint-down) {
-  .page-program .container {
-    max-width: calc(#{$prgm-cols-nbr} * #{$prgm-cols-width} + #{$prgm-first-col-width} + #{$grid-gutter-width});
-  }
-}
-
-// cell sizing
 .table {
-  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0px;
 
-  &:not(.sticky-col):not(.sticky-intersect) {
-    min-width: calc(#{$prgm-cols-nbr} * #{$prgm-cols-width} + #{$prgm-first-col-width});
+  tbody tr:first-of-type > * {
+    border-bottom-width: 0px;
+  }
+
+  width: auto;
+  td {
+    width: 250px;
+    min-width: 250px;
   }
 }
-.table thead th:not(:first-of-type) {
-  width: calc(100% / #{$prgm-cols-nbr} - #{$prgm-first-col-width});
-}
-@media not all and (min-resolution:.001dpcm) {
-  .table thead th:not(:first-of-type) {
-    width: auto;
+
+.table {
+  th {
+    position: sticky;
+    background-color: white;
+  }
+  thead th {
+    top: 0px;
+    z-index: 2;
+
+    &:first-of-type {
+      left: 0px;
+      z-index: 3;
+    }
+  }
+  tbody th {
+    left: 0px;
+    z-index: 1;
   }
 }
-.table thead th:first-of-type {
-  width: $prgm-first-col-width;
+
+.box {
+    width: 100%;
+    min-height: 100%;
+    margin: 10px;
+
+    border-left-width: 4px;
+    border-left-style: solid;
+    border-radius: 1px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+}
+.box-success {
+    border-color: #0BA556;
+    background-color: #CBFACF;
+}
+.box-info {
+    border-color: #0E58CE;
+    background-color: #CDE7FC;
+}
+.box-warning {
+    border-color: #AF9F0A;
+    background-color: #FBF8CB;
+}
+.box-danger {
+    border-color: #C6232E;
+    background-color: #FCDED2;
 }
 
 // minimum row hight
@@ -60,24 +90,17 @@ $prgm-breakpoint-down: sm !default;
 }
 
 // first column alignment
-.table tr th:first-of-type {
+.table th {
   text-align: center;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
 
   // talk times
   &.text-muted {
     font-weight: normal;
   }
 }
-.table tr:first-of-type th {
-  text-align: center;
-}
 
 // time row
 .table tbody th {
-  // move time closer to grid
-  padding-top: .1rem;
 
   // smaller font-size for intermediate times
   &.text-muted {
@@ -88,65 +111,6 @@ $prgm-breakpoint-down: sm !default;
   & > span {
     visibility: hidden;
   }
-}
-
-// outer border settings
-.table {
-  border: 0px none;
-
-  tr:first-of-type th {
-    border-top: 0px none;
-  }
-  tr th:first-of-type {
-    border-left: 0px none;
-  }
-}
-
-// talk box styling
-.alert {
-  overflow-x: hidden;
-
-  border-radius: 0.8rem;
-
-  *, a {
-    color: #202020;
-  }
-}
-
-// jquery.stickyheader
-.table th {
-  background-color: white;
-}
-.sticky-wrap {
-  overflow-x: auto;
-  overflow-y: hidden;
-  position: relative;
-  width: 100%;
-}
-.sticky-wrap .sticky-thead,
-.sticky-wrap .sticky-col,
-.sticky-wrap .sticky-intersect {
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 50;
-  width: auto; /* Prevent table from stretching to full size */
-}
-.sticky-wrap .sticky-thead {
-  z-index: 100;
-  width: 100%; /* Force stretch */
-}
-.sticky-wrap .sticky-intersect {
-  opacity: 0;
-  z-index: 150;
-}
-.sticky-wrap .sticky-intersect th {
-  background-color: #f0f0f0;
-}
-.sticky-wrap td,
-.sticky-wrap th {
-  box-sizing: border-box;
 }
 
 
