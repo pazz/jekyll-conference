@@ -1,46 +1,70 @@
+// Set Theme Variables
+$border-radius:      .1rem;
+$alert-border-width: 4px;
+
+// Import Source
 @import "bootstrap";
 
 
-// Main Styling
+// Adapt Bootstrap Elements
 
-// no bottom margin on info-bar
-.info-bar > p:last-of-type {
+//   Alert
+.alert {
+  //$alert-border-radius
+  border-width: 0px;
+  border-left-width: $alert-border-width;
+}
+
+@each $color, $value in $theme-colors {
+  .border-soft-#{$color} {
+    border-color: theme-color-level($color, $alert-border-level);
+    border-left-width: $alert-border-width;
+    border-left-style: solid;
+  }
+  .bg-soft-#{$color} {
+    @include gradient-bg(theme-color-level($color, $alert-bg-level));
+  }
+}
+
+// Extend Bootstrap Elements
+.display-5 {
+  font-size:   3rem;
+  font-weight: $display4-weight;
+  line-height: $display-line-height;
+}
+.font-normal {
+  .badge {
+    font-size:   .85em;
+  }
+}
+
+
+// Custom Styling
+
+// General
+
+//   No bottom margin on info-bar
+.alert > p:last-of-type {
   margin-bottom: 0;
 }
 
-// line breaks only active on small screens
-@include media-breakpoint-up(lg) {
-  .br-md {
-    display: none;
-  }
-}
-@include media-breakpoint-up(md) {
-  .br-sm {
-    display: none;
-  }
-}
+// Program
 
-
-// Program Styling
+//   Sticky header and first column
 .table {
+  // Avoid sticky cells without border
   border-collapse: separate;
+
+  // Correct border-width caused by border-collapse
   border-spacing: 0px;
-
   tbody tr:first-of-type > * {
-    border-bottom-width: 0px;
+    border-top-width: 0px;
   }
 
-  width: auto;
-  td {
-    width: 250px;
-    min-width: 250px;
-  }
-}
-
-.table {
+  // Sticky positioning
   th {
     position: sticky;
-    background-color: white;
+    background-color: $body-bg;
   }
   thead th {
     top: 0px;
@@ -55,140 +79,96 @@
     left: 0px;
     z-index: 1;
   }
+
+  // Hide border next to sticky header
+  thead tr > th:last-of-type {
+    box-shadow: 10px 0px 0px 0px rgba(255,255,255,1);
+  }
+
+  // TODO: Keep content around table in viewport if overflow occurs
 }
 
-.box {
-    width: 100%;
-    min-height: 100%;
-    margin: 10px;
+//   Column Width
+$prgm-first-col-width: 4rem;
+$prgm-cols-width:      240px;
+$prgm-cols-spacing:    10px;
 
-    border-left-width: 4px;
-    border-left-style: solid;
-    border-radius: 1px;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
-}
-.box-success {
-    border-color: #0BA556;
-    background-color: #CBFACF;
-}
-.box-info {
-    border-color: #0E58CE;
-    background-color: #CDE7FC;
-}
-.box-warning {
-    border-color: #AF9F0A;
-    background-color: #FBF8CB;
-}
-.box-danger {
-    border-color: #C6232E;
-    background-color: #FCDED2;
-}
+.table {
+  // First row defines width for all columns
+  table-layout: fixed;
 
-// minimum row hight
-.table tbody tr {
-  height: 3rem;
-}
+  // Table width
+  width: calc(#{$prgm-cols-nbr} * #{$prgm-cols-width} + #{$prgm-cols-nbr} * #{$prgm-cols-spacing} + #{$prgm-first-col-width});
+  min-width: 100%;
 
-// first column alignment
-.table th {
-  text-align: center;
-
-  // talk times
-  &.text-muted {
-    font-weight: normal;
+  // Column widths
+  thead {
+    th:nth-child(even) {
+      width: $prgm-cols-spacing;
+    }
+    th:nth-child(odd) {
+      width: $prgm-cols-width;
+      max-width: calc((100% / $prgm-cols-nbr) - $prgm-first-col-width - $prgm-cols-nbr * $prgm-cols-spacing);
+    }
+    th:first-of-type {
+      width: $prgm-first-col-width;
+    }
   }
 }
 
-// time row
-.table tbody th {
-
-  // smaller font-size for intermediate times
-  &.text-muted {
-    font-size: 0.8rem;
-  }
-
-  // hide hours for intermediate times
-  & > span {
-    visibility: hidden;
-  }
+// Location
+.nav-pills .nav-link.active {
+  background-color: theme-color-level('primary', $alert-bg-level);
+  color: var(--dark);
 }
 
-
-// Talk Styling
-.ul-talks a {
-  color: #202020;
-}
-.p-speaker {
-  margin-bottom: 0.5rem;
-}
-
-
-// Speaker Styling
-@media (min-width: 576px) {
-  .div-speakerlist {
-    -webkit-column-count: 1;
-            column-count: 1;
-  }
-}
-@media (min-width: 768px) {
-  .div-speakerlist {
-    -webkit-column-count: 2;
-            column-count: 2;
-  }
-}
-@media (min-width: 992px) {
-  .div-speakerlist {
-    -webkit-column-count: 3;
-            column-count: 3;
-  }
-}
-.div-speakergroup {
-  -webkit-column-break-inside: avoid;
+// Speaker
+.speakergroup {
   page-break-inside: avoid;
-  break-inside: avoid-column;
-  display: table;
+  break-inside:      avoid-column;
+}
+@include media-breakpoint-up(sm) {
+  .speakerlist {
+    column-count: 1;
+  }
+}
+@include media-breakpoint-up(md) {
+  .speakerlist {
+    column-count: 2;
+  }
+}
+@include media-breakpoint-up(lg) {
+  .speakerlist {
+    column-count: 3;
+  }
 }
 
-
-// Print Styling
+// Print
 @media print {
   // remove underline for links
-  .table a {
+  a {
     text-decoration: none !important;
-  }
-
-  // show room in program table in regular color
-  .table thead th a {
-    color: #202020;
   }
 
   // overwrite bootstrap default white background
   // works only with Webkit (Chrome, Safari) and Firefox
-  .table td.alert {
-    -webkit-print-color-adjust: exact;
-    color-adjust: exact;
+  @each $color, $value in $theme-colors {
+    .table td.alert-#{$color} {
+      color-adjust: exact;
+      background-color: theme-color-level($color, $alert-bg-level) !important;
 
-    // taken from bootstrap source code
-    //   _alert.scss L47
-    @each $color-name, $value in $theme-colors {
-      &.alert-#{$color-name} {
-        $bg-color: theme-color-level($color-name, $alert-bg-level);
-        background-color: $bg-color !important;
-      }
+      color: black;
     }
   }
   .badge {
-    -webkit-print-color-adjust: exact;
     color-adjust: exact;
 
     border: 0 none white;
+    text-decoration: none !important;
+  }
 
-    // taken from bootstrap source code
-    //   _badge.scss L43
-    @each $color-name, $value in $theme-colors {
-      .badge-#{$color-name} {
-        background-color: $value !important;
-      }
-    }
+  // Remove sticky position from table to show borders
+  .table  th {
+    position: inherit;
   }
 }
