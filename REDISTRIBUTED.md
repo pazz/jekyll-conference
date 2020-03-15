@@ -1,6 +1,6 @@
 # jekyll-conference
 
-Copyright 2017-2019 Lorenz Schmid
+Copyright (C) 2017-2020 Lorenz Schmid
 Released under [MIT](LICENSE.md).
 
 ---
@@ -49,6 +49,7 @@ This project re-distributes the following third-party software. We have decided 
     Copyright (C) 2017 Federico Zivolo.
     [MIT License](http://opensource.org/licenses/MIT).
 
- - [Modified version of Sticky Table Headers & Columns script](https://tympanus.net/codrops/2014/01/09/sticky-table-headers-columns/)
+ - [syncscroll](https://github.com/asvd/syncscroll)
 
-    Copyright (C) Terry Mun
+    Copyright (C) 2015 asvd.
+    [MIT License](http://opensource.org/licenses/MIT).
