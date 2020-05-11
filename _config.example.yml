@@ -120,7 +120,7 @@ conference:
   location:
     # Disable links to locations
     hide: false
-    # Disable map container
+    # Enable map container
     map: true
 
   program:
