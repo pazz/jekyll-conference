@@ -23,5 +23,17 @@
         }).addTo(map);
 
         L.control.locate().addTo(map);
+
+        {% for m in site.conference.location.map.markers %}
+          var coord = [{{ m.coord }}];
+          var icon = L.AwesomeMarkers.icon({
+              icon: "{{ m.icon }}",
+              prefix: 'fa',
+              iconColor: '{{ m.icon_color }}',
+              markerColor: '{{ m.marker_color }}'
+          });
+          var marker = L.marker(coord, {icon: icon}).addTo(map);
+          marker.bindPopup("{{ m.description }}").openPopup();
+        {% endfor %}
     }
 })();
