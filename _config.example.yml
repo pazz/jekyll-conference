@@ -128,6 +128,17 @@ conference:
     hide: false
     map: 
       enable: true
+      default_zoom: 17
+      home_coord: 47.37808, 8.53935
+      map_provider: "OpenStreetMap.Mapnik"
+      markers:
+        - icon: "comments"  # https://fontawesome.com/icons?from=io
+          coord: 47.37808, 8.53935
+          marker_color: "red"
+          icon_color: "white"
+          description: >-
+            <b>HBF</b>
+            A short description
 
   program:
     # URL of program page

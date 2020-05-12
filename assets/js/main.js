@@ -9,10 +9,9 @@
     //   - Hydda.Full
     //   - Thunderforest.Neighbourhood
     //   - Esri.WorldTopoMap
-    var map_provider = 'OpenStreetMap.Mapnik';
-
-    var home_coord = [47.37808, 8.53935];
-    var default_zoom = 17;
+    var map_provider = "{{ site.conference.location.map.map_provider }}";
+    var home_coord = [{{ site.conference.location.map.home_coord }}];
+    var default_zoom = {{ site.conference.location.map.default_zoom }};
 
     if (document.getElementById('map')) {
         var map = L.map('map').setView(home_coord, default_zoom);
