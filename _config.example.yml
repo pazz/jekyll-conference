@@ -126,9 +126,8 @@ conference:
 
     # Disable links to locations
     hide: false
-
-    # Enable map container
-    map: true
+    map: 
+      enable: true
 
   program:
     # URL of program page

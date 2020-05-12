@@ -57,7 +57,8 @@ conference:
 
   location:
     url: '/location'
-    map: true
+    map: 
+      enable: true
 
   program:
     url: '/program'
