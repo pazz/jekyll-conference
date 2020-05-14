@@ -4,9 +4,9 @@
 {% include js/conference.js %}
 
 (function() {
-    var map_provider = "{{ site.conference.location.map.map_provider }}";
+    var map_provider = "{{ site.conference.location.map.map_provider | default: 'OpenStreetMap.Mapnik' }}";
     var home_coord = [{{ site.conference.location.map.home_coord }}];
-    var default_zoom = {{ site.conference.location.map.default_zoom }};
+    var default_zoom = {{ site.conference.location.map.default_zoom | default: 17 }};
 
     if (document.getElementById('map')) {
         var map = L.map('map').setView(home_coord, default_zoom);
@@ -22,13 +22,17 @@
         {% for m in site.conference.location.map.markers %}
           var coord = [{{ m.coord }}];
           var icon = L.AwesomeMarkers.icon({
+              {%- if m.icon %}
               icon: "{{ m.icon }}",
               prefix: 'fa',
-              iconColor: '{{ m.icon_color }}',
-              markerColor: '{{ m.marker_color }}'
+              {%- endif %}
+              iconColor: '{{ m.icon_color | default: "white" }}',
+              markerColor: '{{ m.marker_color | default: "red" }}'
           });
           var marker = L.marker(coord, {icon: icon}).addTo(map);
+          {% if m.description %}
           marker.bindPopup("{{ m.description }}").openPopup();
+          {%- endif %}
         {% endfor %}
     }
 })();
