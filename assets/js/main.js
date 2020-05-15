@@ -4,15 +4,9 @@
 {% include js/conference.js %}
 
 (function() {
-    // Alternative map providers can be found on https://leaflet-extras.github.io/leaflet-providers/preview/
-    // The following do match the Bootstrap design not too badly:
-    //   - Hydda.Full
-    //   - Thunderforest.Neighbourhood
-    //   - Esri.WorldTopoMap
-    var map_provider = 'OpenStreetMap.Mapnik';
-
-    var home_coord = [47.37808, 8.53935];
-    var default_zoom = 17;
+    var map_provider = "{{ site.conference.location.map.map_provider | default: 'OpenStreetMap.Mapnik' }}";
+    var home_coord = [{{ site.conference.location.map.home_coord }}];
+    var default_zoom = {{ site.conference.location.map.default_zoom | default: 17 }};
 
     if (document.getElementById('map')) {
         var map = L.map('map').setView(home_coord, default_zoom);
@@ -24,5 +18,21 @@
         }).addTo(map);
 
         L.control.locate().addTo(map);
+
+        {% for m in site.conference.location.map.markers %}
+          var coord = [{{ m.coord }}];
+          var icon = L.AwesomeMarkers.icon({
+              {%- if m.icon %}
+              icon: "{{ m.icon }}",
+              prefix: 'fa',
+              {%- endif %}
+              iconColor: '{{ m.icon_color | default: "white" }}',
+              markerColor: '{{ m.marker_color | default: "red" }}'
+          });
+          var marker = L.marker(coord, {icon: icon}).addTo(map);
+          {% if m.description %}
+          marker.bindPopup("{{ m.description }}").openPopup();
+          {%- endif %}
+        {% endfor %}
     }
 })();
